@@ -8,7 +8,6 @@ function readCSVFile(filePath) {
                 reject(error);
                 return;
             }
-            
             const rows = data.split('\n');
             const parsedData = rows.map(row => row.split(',').map(cell => cell.trim()));
             resolve(parsedData);
@@ -17,10 +16,11 @@ function readCSVFile(filePath) {
 }
 
 const filePath = 'data.csv';
+const rows_or_columns = "rows";
 readCSVFile(filePath)
     .then(data => {
         console.log('CSV Data:', data);
-        data = do_operation(data, "rows", to_html_table, []);
+        data = do_operation(data, rows_or_columns, to_html_table, []);
         console.log('Swapped Data:', data);
     })
     .catch(error => {
@@ -38,21 +38,25 @@ const insert_entry = (data, n, array_to_insert) => {
 }
 
 const swap = (data, n, m) => {
-    // Se realiza un intercambio facil de "filas"
+    // Se realiza un intercambio facil de "filas" (o columnas previamente transpuestas)
     [data[n], data[m]] = [data[m], data[n]];  
     return data;
 }
 
+// do_operation recibe un parametro que determina si la operación es para filas o columnas
 const do_operation = (data, rows_or_columns, operation, paramaters) => {
     switch(rows_or_columns) {
+        //Caso filas: Ejecutar operación
         case "rows":
             return operation(data, ...paramaters);
-        case "columns":
+        //Caso columnas: Convertir a filas
+            case "columns":
             return operate_on_columns(data, operation, paramaters);
     }
 }
 
 const operate_on_columns = (data, operation, paramaters) => {
+    // Para operar en columnas, se puede transponer, utilizar la operación por filas y transponer de nuevo.
     return transpose(
             operation(
                 transpose(data), ...paramaters
@@ -76,8 +80,14 @@ const to_html_table = (data) => {
     return `\n<table>\n${tableRows}</table>`;
 }
 
+// Funcion que convierte filas en columnas y viceversa
 function transpose(data) {
-    return data.reduce((prev, next) => next.map((item, i) =>
-      (prev[i] || []).concat(next[i])
+    // Funcion reduce que crea un array vacio y lo llena iterativamente
+    // Prev es el array previo, next es el siguiente elemento
+    return data.reduce((prev, next) => 
+        // Se utiliza un .map() bidimensional para poder acceder al segundo indice de data (las columnas)
+        next.map((item, i) =>
+        //Se concatenan todos los valores de una columna en un array
+        (prev[i] || []).concat(next[i])
     ), []);
 }
