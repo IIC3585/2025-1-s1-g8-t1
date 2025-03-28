@@ -1,5 +1,6 @@
 const fs = require('fs');
 const iterator = require("./iterator.js");
+const readline = require('readline');
 
 function readCSVFile(filePath) {
     return new Promise((resolve, reject) => {
@@ -14,18 +15,6 @@ function readCSVFile(filePath) {
         });
     });
 }
-
-const filePath = 'data.csv';
-const rows_or_columns = "rows";
-readCSVFile(filePath)
-    .then(data => {
-        console.log('CSV Data:', data);
-        data = do_operation(data, rows_or_columns, to_html_table, []);
-        console.log('Swapped Data:', data);
-    })
-    .catch(error => {
-        console.error('Error reading CSV:', error);
-    });
 
 const delete_entry = (data, n) => {
     data.splice(n, 1)
@@ -91,3 +80,14 @@ function transpose(data) {
         (prev[i] || []).concat(next[i])
     ), []);
 }
+
+module.exports = {
+    readCSVFile,
+    delete_entry,
+    insert_entry,
+    swap,
+    operate_on_columns,
+    transpose,
+    to_html_table,
+    do_operation
+};
