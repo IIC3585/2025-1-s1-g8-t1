@@ -1,5 +1,4 @@
 const fs = require('fs');
-const iterator = require("./iterator.js");
 const readline = require('readline');
 
 function readCSVFile(filePath) {
@@ -12,6 +11,19 @@ function readCSVFile(filePath) {
             const rows = data.split('\n');
             const parsedData = rows.map(row => row.split(',').map(cell => cell.trim()));
             resolve(parsedData);
+        });
+    });
+}
+
+function writeCSVFile(filePath, data) {
+    return new Promise((resolve, reject) => {
+        const rows = data.map(row => row.join(',')).join('\n');
+        fs.writeFile(filePath, rows, 'utf-8', (error) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve();
         });
     });
 }
@@ -83,6 +95,7 @@ function transpose(data) {
 
 module.exports = {
     readCSVFile,
+    writeCSVFile,
     delete_entry,
     insert_entry,
     swap,
