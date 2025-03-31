@@ -1,6 +1,7 @@
 # Diseño Avanzado de Aplicaciones Web - Tarea 1: JavaScript Funcional
 
 **Integrantes: Agustín Pini, Bruno Tike, Rafael Fodor**
+
 **Sección 1, Grupo 8**
 
 Este proyecto consiste en un modificador sencillo de archivos .csv creado mediante el paradigma de programación funcional en el lenguaje JavaScript y controlado por la terminal.
