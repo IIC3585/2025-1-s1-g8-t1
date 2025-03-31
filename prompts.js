@@ -7,8 +7,7 @@ const {
     swap,
     transpose,
     to_html_table,
-    operate_on_columns,
-    do_operation,
+    operate_on_columns
 } = require('./data_functions.js');
 const { write } = require('fs');
 
@@ -26,7 +25,7 @@ rl.question(`Seleccione el operador que desea aplicar al .csv:\n
     4)Eliminar fila (requiere índice)
     5)Eliminar columna (requiere índice)
     6)Insertar fila (después del índice n)
-    7) Insertar columna (después del índice n)
+    7)Insertar columna (después del índice n)
     8)Generar tabla html\n Ingrese la opción: `, function(option) {
     readCSVFile(filePath)
         .then(data => {
@@ -51,7 +50,8 @@ rl.question(`Seleccione el operador que desea aplicar al .csv:\n
                     // Swap de columnas: se piden dos índices
                     rl.question("Ingrese los índices n y m separados por coma (ej: 1,2): ", function(indices) {
                         const [n, m] = indices.split(',').map(Number);
-                        data = swap(data.splice(1), n, m); // o data solo, revisar porfa
+                        console.log(typeof n, typeof m);
+                        data = operate_on_columns(data, swap, [n, m]);
                         console.log("Swap realizado:", data);
                         writeCSVFile(filePath.replace(".csv", "_modified.csv"), data);
                         rl.close();
@@ -77,7 +77,7 @@ rl.question(`Seleccione el operador que desea aplicar al .csv:\n
                         rl.close();
                     });
                     break;
-                case "6":// Revisar
+                case "6":
                     // Insertar fila:  pide el índice y luego la nueva fila (en formato separado por comas), Revisar el tema de índices
                     rl.question("Ingrese el índice después del cual insertar la nueva fila: ", function(n) {
                         rl.question("Ingrese los valores de la nueva fila separados por coma (ej: Valor1, Valor2, Valor3): ", function(newRow) {
@@ -126,7 +126,7 @@ rl.question(`Seleccione el operador que desea aplicar al .csv:\n
             }
         })
         .catch(error => {
-            console.error("Error al leer el CSV:", error);
+            console.error("Error al leer el archivo CSV:", error);
             rl.close();
         });
 });

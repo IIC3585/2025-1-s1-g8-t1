@@ -44,18 +44,6 @@ const swap = (data, n, m) => {
     return data;
 }
 
-// do_operation recibe un parametro que determina si la operación es para filas o columnas
-const do_operation = (data, rows_or_columns, operation, paramaters) => {
-    switch(rows_or_columns) {
-        //Caso filas: Ejecutar operación
-        case "rows":
-            return operation(data, ...paramaters);
-        //Caso columnas: Convertir a filas
-            case "columns":
-            return operate_on_columns(data, operation, paramaters);
-    }
-}
-
 const operate_on_columns = (data, operation, paramaters) => {
     // Para operar en columnas, se puede transponer, utilizar la operación por filas y transponer de nuevo.
     return transpose(
@@ -101,6 +89,5 @@ module.exports = {
     swap,
     operate_on_columns,
     transpose,
-    to_html_table,
-    do_operation
+    to_html_table
 };
