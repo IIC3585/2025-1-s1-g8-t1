@@ -69,7 +69,7 @@ const to_html_table = (data) => {
     return `\n<table>\n${tableRows}</table>`;
 }
 
-// Funcion que convierte filas en columnas y viceversa
+// Funcion que convierte filas en columnas y viceversa, extraida de https://stackoverflow.com/a/41772644
 function transpose(data) {
     // Funcion reduce que crea un array vacio y lo llena iterativamente
     // Prev es el array previo, next es el siguiente elemento

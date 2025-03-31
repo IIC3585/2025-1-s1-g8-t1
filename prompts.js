@@ -90,27 +90,19 @@ rl.question(`Seleccione el operador que desea aplicar al .csv:\n
                     });
                     break;
                 case "7":
-                    // Insertar columna: se pide el índice y luego la nueva columna (para cada fila)
-                    // Nota: se asume que se inserta el mismo valor en cada fila o se podría solicitar un valor distinto para cada una.
-                    rl.question("Ingrese el índice después del cual insertar la nueva columna: ", function(n) {
-                        rl.question("Ingrese el valor para la nueva columna (se insertará en cada fila): ", function(newValue) {
-                            // Primero transponemos para operar como filas
-                            let transposed = transpose(data);
-                            // Se inserta la nueva 'fila' que corresponde a la columna, en cada fila transpuesta
-                            // Aquí se inserta el valor en cada fila transpuesta
-                            transposed = transposed.map(row => {
-                                const index = Number(n) + 1;
-                                row.splice(index, 0, newValue);
-                                return row;
-                            });
-                            // Se vuelve a transponer para obtener el resultado final
-                            data = transpose(transposed);
-                            console.log("Columna insertada:", data);
-                            writeCSVFile(filePath.replace(".csv", "_modified.csv"), data);
-                            rl.close();
-                        });
+                // Insertar fila:  pide el índice y luego la nueva fila (en formato separado por comas), Revisar el tema de índices
+                rl.question("Ingrese el índice después del cual insertar la nueva columna: ", function(n) {
+                    rl.question("Ingrese los valores de la nueva columna separados por coma (ej: Valor1, Valor2, Valor3): ", function(newRow) {
+                        let transposedData = transpose(data);
+                        const newColumnArray = newRow.split(',').map(cell => cell.trim());
+                        transposedData = insert_entry(transposedData, Number(n) + 1, newColumnArray);
+                        data = transpose(transposedData);
+                        console.log("Columna insertada:", data);
+                        writeCSVFile(filePath.replace(".csv", "_modified.csv"), data);
+                        rl.close();
                     });
-                    break;
+                });
+                break;
 
                 case "8":
                     // Llamada a la función to_html_table

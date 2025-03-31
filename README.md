@@ -1,6 +1,7 @@
-# 2025-1-s1-g8-t1
+# Diseño Avanzado de Aplicaciones Web - Tarea 1: JavaScript Funcional
 
-## Integrantes: Agustín Pini, Bruno Tike, Rafael Fodor
+**Integrantes: Agustín Pini, Bruno Tike, Rafael Fodor**
+**Sección 1, Grupo 8**
 
 Este proyecto consiste en un modificador sencillo de archivos .csv creado mediante el paradigma de programación funcional en el lenguaje JavaScript y controlado por la terminal.
 
@@ -10,7 +11,9 @@ El approach consiste en el hecho de que las operaciones solo estan definidas par
 
 Se utilizan elementos funcionales como los métodos map() y reduce(). Además de las estrategias de compose y el uso correcto de funciones asíncronas.
 
-Este programa hace uso de las librerias readline para el manejo desde la terminal y fs para procesar archivos.
+Este programa hace uso de las librerías readline para el manejo desde la terminal y fs para procesar archivos.
 
 Para iniciar, escribir en terminal el comando:
-```node .\prompts.js```
+```
+node .\prompts.js
+```
